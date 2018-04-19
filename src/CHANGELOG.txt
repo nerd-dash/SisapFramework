@@ -1,0 +1,32 @@
+-0.2.4.1
+	- Criação da classe de Verba e Collection de Verbas
+	- Classe que representa a tabela de Vencimentos 
+	- Primeiros testes de busca de verbas #TODO
+	- Busca de dados do servidor ativada pela admissão
+	- Campos de situação funcional e "Do servidor" à classe ServidorClass
+	- Inclusão da detecção de servidor aposentado
+	- Função de Login não para em avisos apos entrar no Sisap
+	- Inclusão de Naturezas que geram substituição na Designação
+	- Teste de designacoes
+	- Busca de dados atualizado de servidor Desligado
+	- Designação refatorada agora aceita servidores do administrativo
+	- Função de limpeza das FP conversão
+	- Pesquisa de Verbas ao final de Calculo de Conversão de FP
+	- Implementação de função de limpeza para Release
+-0.2.4.3
+	- Todas strings caputradas do Sisap são colocadas em maiúsculas para compatibilidade com a opção "Só maiúsculas".
+	- Todas variáveis globais agora estão em uppercase.
+	- Ignora msg 004 ao buscar Ipsemg.
+	- Matéria 93000 incluída.
+	- Ao buscar novo servidor todas os formulários são resetados.
+	- Alerta de acerto ao finalizar Designação.
+	- Bug na Pesquisa de Histórico de dados financeiros quando o servidor não tem folha.
+	- Planilha de Cálculo de Acerto de Designação já puxa dados básicos da designação.
+	- Código 76 removido da lista de codigos que geram subistiuição.
+	- A função DataEstaEntre retorna verdadeiro se as datas Inicial e final forem ambas igual a 0.
+	- Nova nomenclatura de arquivos, funcoes e variáveis aplicada.
+	- Volta para tela inicial sem reportar erros.
+	- Implementação do sistema de Navegação de telas
+	- Função de Desligamento de Designação
+	- Envia verbas de vantagem de Designação.
+	- Pesquisa de Férias Prêmio do Substituto na Designação
