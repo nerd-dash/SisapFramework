@@ -13,7 +13,7 @@
 	- Função de limpeza das FP conversão
 	- Pesquisa de Verbas ao final de Calculo de Conversão de FP
 	- Implementação de função de limpeza para Release
--0.2.4.3
+-0.2.4.3a
 	- Todas strings caputradas do Sisap são colocadas em maiúsculas para compatibilidade com a opção "Só maiúsculas".
 	- Todas variáveis globais agora estão em uppercase.
 	- Ignora msg 004 ao buscar Ipsemg.
@@ -30,3 +30,11 @@
 	- Função de Desligamento de Designação
 	- Envia verbas de vantagem de Designação.
 	- Pesquisa de Férias Prêmio do Substituto na Designação
+-0.2.4.4
+	- Adqueção da interface das funções de Dados do Servidor e Designação.
+	- Formulários agora ficam no topo esquerdo da planilha inicialmente.
+	- Formulários memorizam sua ultima posição.
+	- A janela do Sisap aberta pelo formulário de login agora vem identificada com "SISAP:A" no nome. Isso tende a permitir a utilização de outras telas ao mesmo tempo.
+	- Planilha já busca acertos (Vantagens e Descontos) no sistema e popula tabelas.
+	- Classe de manipulação de interface visual. (Formulários)
+	- Form de Login não funciona mais sem dados de masp e senha inseridos.

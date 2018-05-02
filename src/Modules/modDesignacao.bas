@@ -340,18 +340,18 @@ Private Function EnviaVerbaAbonoEC()
     End If
 End Function
 Private Function EncontraProximaVerba()
-    Dim verba As Long
+    Dim Verba As Long
     Dim i As Long
     
     i = 9
     
-    verba = -1
+    Verba = -1
     
     Do
-        verba = gsspSisap.PegaVerba(i, 5)
-        If Not verba = 0 Then
+        Verba = gsspSisap.PegaVerba(i, 5)
+        If Not Verba = 0 Then
             gsspSisap.ProximaLinha
             i = i + 1
         End If
-    Loop While Not verba = 0
+    Loop While Not Verba = 0
 End Function

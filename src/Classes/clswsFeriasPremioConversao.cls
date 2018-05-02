@@ -107,7 +107,7 @@ End Property
 Public Function NovaConversao()
     
     Planilha.Unprotect
-    Application.EnableEvents = False
+    
     Planilha.[FPConversaoEspecie.Publicacao.Dia] = ""
     Planilha.[FPConversaoEspecie.Publicacao.Mes] = ""
     Planilha.[FPConversaoEspecie.Publicacao.Ano] = ""
@@ -127,7 +127,6 @@ Public Function NovaConversao()
     Planilha.[FPConversaoEspecie.OutosCampos.OutrasVant.Verba] = ""
     Planilha.[FPConversaoEspecie.OutosCampos.OutrasVant] = ""
     Planilha.[FPConversaoEspecie.VencimentoRB] = "-"
-    Application.EnableEvents = True
     Planilha.Protect
     
     

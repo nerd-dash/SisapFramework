@@ -1,33 +1,45 @@
 Attribute VB_Name = "TesteVerbas"
-Sub TesteVerbas()
-  
-    Dim verba As New clsVerba
-    Dim Vantagens As New clsAcertoVantagem
-    
-    With gsspSisap
-    
-    
-    
-        For i = 9 To 20
-        
-            Set verba = New clsVerba
-            
-            verba.verba = .PegaVerba(i, 5)
-            
-            If verba.verba <> 0 Then
-            
-                verba.Operacao = .PegaCampo(1, i, 3)
-                verba.DataInicio = .PegaData(14, i, 11)
-                verba.DataFim = .PegaData(14, i, 25)
-                verba.QtdEspecif = .PegaCampoMoeda(11, True, i, 40)
-                verba.Valor = .PegaCampoMoeda(10, True, i, 52)
-                verba.Vigencia = .PegaData(14, i, 63)
-                
-                Vantagens.Add verba
-            End If
-        Next i
-    
-    End With
+Sub TestaBuscarVerbas()
 
+    Application.EnableEvents = False
+    gdsvServidor.MaspDv = 3258126
+    gdsvServidor.Admisao = 1
+    
+    PegaVerbasCargoRecebimento
+    
+    Dim acerto As IVerbas
+    
+    Set acerto = New clsAcertoVantagem
+    
+    acerto.AtualizaFormulario
+    
+    Debug.Assert acerto.Verbas.Item(1).Verba = 26
+    Debug.Assert acerto.Verbas.Item(2).Verba = 28
+    Debug.Assert acerto.Verbas.Item(3).Verba = 42
+   
+    Set acerto = Nothing
+    
+    Set acerto = New clsAcertoDesconto
+    
+    
+    Debug.Assert acerto.Verbas.Item(1).Verba = 5502
+    Debug.Assert acerto.Verbas.Item(2).Verba = 5647
+    Debug.Assert acerto.Verbas.Item(3).Verba = 5643
+    
+   
+    Application.EnableEvents = True
+    
+End Sub
+
+Public Sub TestaLimpezaDasTabelas()
+    Dim acerto As IVerbas
+    
+    Set acerto = New clsAcertoVantagem
+    acerto.Limpa
+
+    Set acerto = Nothing
+    Set acerto = New clsAcertoDesconto
+    acerto.Limpa
+    
 End Sub
 

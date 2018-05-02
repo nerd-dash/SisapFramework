@@ -135,7 +135,7 @@ End Function
 
 Public Function LimpaFormulario()
 
-    Application.EnableEvents = False
+   
     
     Planilha.Unprotect
     Planilha.[Servidor.Cargo] = ""
@@ -144,8 +144,8 @@ Public Function LimpaFormulario()
     Planilha.[Servidor.SituacaoFuncional] = ""
     Planilha.[Servidor.SituacaoServidor] = ""
     Planilha.[Servidor.Nome] = ""
-    Planilha.Protect
+    Planilha.[Servidor.DataAposentadoria] = DATA_VAZIA
     
-    Application.EnableEvents = True
+    Planilha.Protect
 End Function
 

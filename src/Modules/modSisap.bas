@@ -28,9 +28,9 @@ Public Sub ManutencaoDeDadosFinanceiros()
 End Sub
 
 Public Sub PesquisaDadosPessoais()
-    Titulo = "PESQUISAR DADOS PESSOAIS"
+    
     With gsspSisap
-        If Not .PegaCampo(Len(Titulo), 4, 26) = Titulo Then
+        If Not gsspSisap.Tela.Indice = 27 Then
             .AcessaComando "PESQUISA DADOS.PESSOAIS"
         End If
     End With
@@ -39,7 +39,7 @@ End Sub
 Public Sub PesquisaDeDadosFinanceiros()
     Titulo = "PESQUISA DADOS FINANCEIROS"
     With gsspSisap
-        If Not .PegaCampo(Len(Titulo), 4, 29) = Titulo Then
+        If Not gsspSisap.Tela.Indice = 35 Then
             .AcessaComando Titulo, "* DADOS"
         End If
     End With
@@ -54,27 +54,49 @@ Public Sub CargaHorariaSEE()
     End With
 End Sub
 
-
 Public Sub DesativarAssitMedicaIPSEMG()
-    Titulo = "DESATIVAR ASSIST.MEDICA -IPSEMG"
     With gsspSisap
-        If Not .VerificaTituloTela( _
-            "MANUTENCAO ASSISTENCIA MEDICA IPSEMG") Then
-            .AcessaComando Titulo
+        If Not gsspSisap.Tela.Indice = 42 Then
+            .AcessaComando "DESATIVAR ASSIST.MEDICA -IPSEMG"
         End If
     End With
 End Sub
 
 Public Sub PesquisaTabelasSisap()
-    Titulo = "PESQUISAR TABELAS"
     With gsspSisap
-        If Not .VerificaTituloTela(Titulo) Then
+        If Not gsspSisap.Tela.Indice = 98 Then
             .AcessaComando "PESQUISA TABELAS SISAP"
         End If
     End With
 End Sub
 
+Public Sub PesquisarVinculados()
 
+     With gsspSisap
+         If Not gsspSisap.Tela.Indice = 75 Then
+            .AcessaComando "PESQUISA VINCULADOS"
+            .PrimeiroCampo
+        End If
+    End With
+
+End Sub
+
+Public Sub MudancaSituacaoServidor()
+    With gsspSisap
+         If Not gsspSisap.Tela.Indice = 81 Then
+            .AcessaComando "MUDANCA SITUACAO EXERCICIO."
+            .PrimeiroCampo
+        End If
+    End With
+End Sub
+Public Sub PesquisaInspecaoMedica()
+    With gsspSisap
+         If Not gsspSisap.Tela.Indice = 81 Then
+            .AcessaComando "PESQUISA INSPECAO.MEDICA"
+            .PrimeiroCampo
+        End If
+    End With
+End Sub
 
 
 

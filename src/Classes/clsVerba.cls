@@ -22,9 +22,9 @@ Public Property Get Operacao() As String
 End Property
 
 
-Public Property Get verba() As Long
+Public Property Get Verba() As Long
 
-    verba = pVerba
+    Verba = pVerba
 
 End Property
 
@@ -68,7 +68,7 @@ Public Property Let Operacao(Operacao_ As String)
 End Property
 
 
-Public Property Let verba(Verba_ As Long)
+Public Property Let Verba(Verba_ As Long)
 
     pVerba = Verba_
 

@@ -22,14 +22,36 @@ Public Sub ServidorBuscaNome()
     End With
     
 End Sub
+Public Function ServidorSelecionarAdmissao() As Long
 
+    With gsspSisap
+        .PrimeiroCampo
+        
+        i = 12
+        
+        Do While Not .PegaCampoNumerico(1, i, 16) = gdsvServidor.Admisao
+            .ProximoCampo
+            i = i + 1
+            If i > 21 Then
+                .JanelaErro "Não foi possível encontrar a Admissão solicitada!"
+                .EncerraSisap
+            End If
+        Loop
+        .MarcarOpcao
+        ServidorSelecionarAdmissao = .Enter
+    End With
+
+
+End Function
 
 
 Public Sub ServidorBuscaCargo(Optional ByVal DataReferencia As Date)
     
     With gsspSisap
     
-        If EntraCargoAtivo(DataReferencia) Then
+        Debug.Print NavEntraCargoAtivo(DataReferencia)
+    
+        If NavEntraCargoAtivo(DataReferencia) Then
             gdsvServidor.Cargo = _
                 .PegaCampo(7, 14, 46) & _
                 .PegaCampo(1, 14, 65)
@@ -69,12 +91,10 @@ Public Function EntraCargoAtivo( _
    
     With gsspSisap
         
-        NavDadosFuncionais
-        
         gdsvServidor.CodSituacaoFuncional = .PegaCampoNumerico(2, 9, 18)
         gdsvServidor.CodSituacaoServidor = .PegaCampoNumerico(2, 10, 18)
         gdsvServidor.SituacaoFuncional = .PegaCampo(35, 9, 23)
-        gdsvServidor.SituacaoServidor = .PegaCampo(57, 10, 23)
+        gdsvServidor.SituacaoServidor = .PegaCampo(35, 10, 23)
         
         EntraCargoAtivo = IdentificarCargo(14, 18, 24, 7, DataReferencia)
    End With
@@ -112,77 +132,6 @@ Public Sub PesquisarAfastamentos(Optional ByVal MaspDv As Long = 0, _
     End With
     
 End Sub
-Public Function EvolucaoCarreira( _
-    Optional ByVal DataReferencia As Date)
-
-    Titulo = "PESQUISAR SERVIDOR PUBLICO"
-   
-    With gsspSisap
-        If Not .VerificaTituloTela(Titulo) Then
-            EntraCargoAtivo DataReferencia
-        End If
-        .MarcarOpcao 21, 19
-        .Enter 1, 205
-    End With
-
-End Function
-
-Public Function PesquisarCargaHoraria()
-
-    Titulo = "PESQUISAR CARGA HORARIA"
-   
-    With gsspSisap
-        If Not .VerificaTituloTela(Titulo) Then
-            CargaHorariaSEE
-            .EnviaOpcao 7
-            .Enter
-        Else
-            .F9
-        End If
-    End With
-
-End Function
-
-Public Function PesquisarCargaHorariaVigente( _
-    Optional ByVal Data As Date = DATA_EM_ABERTO, _
-    Optional ByVal MaspDv As Long = 0, _
-    Optional ByVal Admissao As Integer = 0, _
-    Optional ByVal ColunaDataInicial As Integer, _
-    Optional ByVal ColunaDataFinal As Integer)
-
-    If Data = DATA_EM_ABERTO Then
-        Data = Date
-    End If
-    
-    If MaspDv = 0 Then
-        MaspDv = gdsvServidor.MaspDv
-    End If
-    
-    If Admissao = 0 Then
-        Admissao = gdsvServidor.Admisao
-    End If
-
-    Titulo = "PESQUISAR C. H. DE SERVIDOR POR UNIDADE VIGENTE EM: " _
-    & Format(Data, "mm") & "/" & Format(Data, "yyyy")
-    
-    With gsspSisap
-        If Not .VerificaTituloTela(Titulo) Then
-            PesquisarCargaHoraria
-            .EnviaOpcao 2
-            .Enter
-            .Envia Format(Data, "mmyyyy")
-            .Enter
-            .EnviaMaspDv MaspDv
-            .ProximoCampo 8
-            .EnviaAdm Admissao
-            .Enter
-            IdentificarCargo 12, 20, 24, 8, Data, _
-                ColunaDataInicial, ColunaDataFinal
-        End If
-        
-    End With
-
-End Function
 
 
 Public Function ServidorBuscaPosicionamento( _
@@ -196,12 +145,8 @@ Public Function ServidorBuscaPosicionamento( _
     End If
        
     With gsspSisap
-        If Not .VerificaTituloTela(Titulo) Then
-            EvolucaoCarreira Data
-        Else
-            .F2
-            EvolucaoCarreira Data
-        End If
+    
+        NavEvolucaoCarreira
         
         Dim AchouPosicionamento As Boolean
         AchouPosicionamento = False
@@ -246,7 +191,7 @@ Public Function ServidorBuscaCargaHoraria( _
         Data = Date
     End If
 
-    PesquisarCargaHorariaVigente Data, 0, 0, 52, 65
+    NavPesquisarCargaHorariaVigente Data, 0, 0, 52, 65
     
     With gsspSisap
 
@@ -471,7 +416,7 @@ Public Function RetornaUnidadeAdministrativadeExercico( _
     
     With gsspSisap
            
-        EntraCargoAtivo DataReferencia
+        NavEntraCargoAtivo DataReferencia
         
         If gdsvServidor.CodSituacaoServidor <> 2 Then
             .MarcarOpcao 20, 61
@@ -488,7 +433,7 @@ Public Function RetornaUnidadeAdministrativadeLotacao( _
     
     With gsspSisap
            
-        EntraCargoAtivo DataReferencia
+        NavEntraCargoAtivo DataReferencia
         
         If gdsvServidor.CodSituacaoServidor <> 2 Then
             .MarcarOpcao 21, 3
@@ -504,7 +449,7 @@ End Function
 
 
 Public Function BuscaDadosAtuaisServidor()
-            Application.ScreenUpdating = False
+           
                 If gdsvServidor.MaspDv > 0 And _
                     gdsvServidor.Admisao > 0 Then
                     'Servidor.LimpaFormulario
@@ -513,14 +458,15 @@ Public Function BuscaDadosAtuaisServidor()
                     RotinaPegaLotacao
                     RotinaPegaExercicio
                     If gdsvServidor.CodSituacaoServidor = 7 Then
-                        gdsvServidor.MostraLinha 10
+                        gdsvServidor.MostraLinha 14
                         gfpcFPConversao.DataAposentadoria = _
                         gdsvServidor.DataAposentadoria
                     Else
-                        gdsvServidor.EscondeLinha 10
+                        gdsvServidor.EscondeLinha 14
+                        gdsvServidor.DataAposentadoria = DATA_VAZIA
                     End If
                 End If
-            Application.ScreenUpdating = True
+            
 End Function
 
 

@@ -10,10 +10,19 @@ Public Sub TesteDadosdoServidor()
     gdsvServidor.MaspDv = 12124921
     gdsvServidor.Admisao = 1
     
+    modServidor.ServidorBuscaNome
+
+    modServidor.ServidorBuscaCargo
+
+    
+    modServidor.RotinaPegaLotacao gdsvServidor.DataAposentadoria
+
+    modServidor.RotinaPegaExercicio
+    
     Debug.Assert gdsvServidor.Nome = "MARIA EMILIA DE FREITAS PALHARES PRAIS"
     Debug.Assert gdsvServidor.Cargo = "ATBD1A"
     Debug.Assert gdsvServidor.Lotacao = "0"
-    Debug.Assert gdsvServidor.Exercicio = "EE PROFESSOR MINERVINO CESARINO"
+    Debug.Assert gdsvServidor.Exercicio = ""
     
 
 '############################################################
@@ -46,7 +55,6 @@ Public Sub TesteDadosdoServidor()
     
     Application.EnableEvents = True
 
-    gsspSisap.EncerraSisap
 '############################################################
 
     'gdsvServidor DESIGNADO
@@ -60,7 +68,7 @@ Public Sub TesteDadosdoServidor()
     Debug.Assert gdsvServidor.Nome = "JOSINEIDE BEZERRA NOBREGA DA SILVA"
     Debug.Assert gdsvServidor.Cargo = "PEBD1A"
     Debug.Assert gdsvServidor.Lotacao = "0"
-    Debug.Assert gdsvServidor.Exercicio = "EE BRASIL"
+    Debug.Assert gdsvServidor.Exercicio = ""
     
 '############################################################
 

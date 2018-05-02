@@ -13,8 +13,12 @@ Sub TestesDesignicoes()
 
     gdsgDesigncao.NovaDesigncao
     
+    modRecursos.EventosHabilitados False
+    
     gdsvServidor.MaspDv = 13169842
     gdsvServidor.Admisao = 2
+    
+    modRecursos.EventosHabilitados True
     
     'Vai buscar dados do servidor
     gdsgDesigncao.LetUnidadeAdministrativa "158330"

@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmDesignacao 
    Caption         =   "Designação"
-   ClientHeight    =   2220
+   ClientHeight    =   3030
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   4800
+   ClientWidth     =   5040
    OleObjectBlob   =   "frmDesignacao.frx":0000
    ShowModal       =   0   'False
 End
@@ -13,6 +13,35 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+Private Top As Double
+Private Left As Double
+Private Planilha As wsDadosFormularios
+
+Private Sub UserForm_Initialize()
+
+    Set Planilha = wsDadosFormularios
+        
+    Top = Planilha.[frmDesignacao.Top].Value2
+    Left = Planilha.[frmDesignacao.Left].Value2
+    
+    With Me
+        If Top = 0 And Left = 0 Then
+            .Top = Application.Top
+            .Left = Application.Left
+        Else
+            .Top = Top
+            .Left = Left
+        End If
+    End With
+    
+End Sub
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+    With Me
+        Planilha.[frmDesignacao.Top].Value2 = .Top
+        Planilha.[frmDesignacao.Left].Value2 = .Left
+    End With
+End Sub
+
 Private Sub btnAfastamentoSubs_Click()
     
     Pesquisar_Afastamentos gdsgDesigncao.SubstituidoMaspDv, _
@@ -55,3 +84,30 @@ Private Sub btnFPSubs_Click()
         End If
     End With
 End Sub
+
+Private Sub btnPlanilha_Click()
+    Dim bool As Boolean
+    bool = Not wsAcertoDesignacao.Visible
+    wsAcertoDesignacao.Visible = bool
+    
+    If bool Then
+        wsAcertoDesignacao.Activate
+    Else
+        wsDesignacao.Activate
+    End If
+    
+    
+End Sub
+
+Private Sub Frame1_Click()
+
+End Sub
+
+Private Sub UserForm_Click()
+
+End Sub
+
+Private Sub UserForm_Deactivate()
+
+End Sub
+

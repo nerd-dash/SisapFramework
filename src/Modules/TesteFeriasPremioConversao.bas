@@ -28,7 +28,7 @@ Public Sub TesteFPConversao()
     Debug.Assert gfpcFPConversao.VencimentoRB = 1567.21
   
     DadosFinanceirosMesesAnteriores
-    
+
     Application.EnableEvents = True
 
     '##################

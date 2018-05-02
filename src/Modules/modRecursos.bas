@@ -10,22 +10,59 @@ Public gdsgDesigncao As New clswsDesignacao
 Public gfpcFPConversao As New clswsFeriasPremioConversao
 Public gdsvServidor As New clswsDadosServidor
 Public gsspSisap As New clsSisap
-Public glngPid As Long
 Public gnavNavegador As New clsNavegador
+Public gestEstilo As New clsEstilos
 
 ''Constantes Globais
 Public Const DATA_EM_ABERTO As Date = #12/31/2999#
 Public Const DATA_VAZIA As Date = #12:00:00 AM#
-Public Const JANELA_SISAP As String = "pw3270:A"
+Public Const JANELA_SISAP As String = "SISAP"
 Public Const TITULO_JANELA_SISAP As String = _
     JANELA_SISAP & " - bhmvsb.prodemge.gov.br"
+    
+Public Declare PtrSafe Function SetForegroundWindow Lib "user32" (ByVal hwnd As Long) As Long
+
+
+
+Public Property Get glngPID() As Long
+    glngPID = wsDadosFormularios.[frmLogin.PID]
+End Property
+
+Public Property Let glngPID(ByVal PID As Long)
+    wsDadosFormularios.[frmLogin.PID] = PID
+End Property
 
 
 ''Procedure para Testes rápido
 Sub A_TableTest()
-
-   EnviaVerbasDeAcerto
     
+    FunctionNavDadosFinanceirosMesesAnteriores
+   'NavPesquisarCargaHorariaVigente
+    'gestEstilo.Fundo Range("A1:N175")
+    ''gestEstilo.FormularioFundo Range("B2:M15")
+   ' gestEstilo.FormularioTitulo Range("C3:L3")
+    'gestEstilo.FormularioGrupo Range("C9:L14")
+   
+    
+
+    
+
+    
+    'gsspSisap.BuscaJanelaSisap
+    
+
+
+
+ 'PegaVerbasCargoRecebimento
+'    Debug.Print ActiveSheet.Name
+ '   ActiveSheet.Range("Area_de_impressao").ExportAsFixedFormat Type:=xlTypePDF, _
+                                              Filename:=ActiveSheet.Name, _
+                                              Quality:=xlQualityStandard, _
+                                              IncludeDocProperties:=True, _
+                                              IgnorePrintAreas:=False, _
+                                              OpenAfterPublish:=True
+   
+
 End Sub
 
 
@@ -45,18 +82,22 @@ End Function
 
 Public Sub PreparaRelease()
 
+
+    LimpaTodosFormularios
+    
     wsGeral.Range("I10") = "Alterar"
     wsGeral.Range("T10") = "0"
-    wsDadosOcultos.[Taxador.Login.Masp] = ""
-    wsDadosOcultos.[Taxador.Login.Senha] = ""
-    wsDadosOcultos.[Taxador.Login.Impressora] = "YQPF"
-    wsDadosOcultos.[Taxador.Login.LembrarSenha] = False
-    
-    LimpaTodosFormularios
+    wsDadosFormularios.[frmLogin.Masp] = ""
+    wsDadosFormularios.[frmLogin.Senha] = ""
+    wsDadosFormularios.[frmLogin.Top] = ""
+    wsDadosFormularios.[frmLogin.Left] = ""
+    wsDadosFormularios.[frmLogin.PID] = ""
+    wsDadosFormularios.[frmLogin.Impressora] = "YQPF"
+    wsDadosFormularios.[frmLogin.LembrarSenha] = False
     
     wsDadosServidor.[Servidor.MaspDv] = ""
     wsDadosServidor.[Servidor.Admissao] = ""
-    wsGeral.Range("I10").Select
+
     
 End Sub
 
@@ -65,6 +106,7 @@ Public Function LimpaTodosFormularios()
     gdsvServidor.LimpaFormulario
     gfpcFPConversao.NovaConversao
     gdsgDesigncao.NovaDesigncao
+    wsDadosFormularios.Range("B1:z23").Value2 = ""
     
 End Function
 
@@ -83,4 +125,15 @@ End Function
 
 Public Function PrimerioDiaMes()
     PrimerioDiaMes = DateSerial(Year(Date), Month(Date), 1)
+End Function
+
+Public Sub MyAppActive(Handle As Long)
+    Dim lngStatus As Long
+    lngStatus = SetForegroundWindow(Handle)
+End Sub
+
+
+Public Function EventosHabilitados(ByVal bool As Boolean)
+    Application.EnableEvents = bool
+    Application.ScreenUpdating = bool
 End Function

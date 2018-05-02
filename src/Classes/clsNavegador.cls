@@ -20,18 +20,37 @@ Private Sub Class_Initialize()
 End Sub
 
 
-Public Function AdicionaProximaTela()
+Public Function AdicionaProximaTela(ByVal Numero_da_Funcao As Integer)
     
     Dim adiciona As Boolean
     Dim Linha As Range
     Dim TelaProxima As clsTela
     Dim TelaAnterior As clsTela
     
-    
-    
     adiciona = True
     
-    gsspSisap.Enter 1, 0
+    Select Case Numero_da_Funcao
+    
+    Case 2
+        gsspSisap.F2 1, 0
+    Case 3
+        gsspSisap.F3 1, 0
+    Case 4
+        gsspSisap.F4 1, 0
+    Case 5
+        gsspSisap.F5 1, 0
+    Case 7
+        gsspSisap.F7 1, 0
+    Case 8
+        gsspSisap.F8 1, 0
+    Case 9
+        gsspSisap.F9 1, 0
+    Case 10
+        gsspSisap.F10 1, 0
+    Case Else
+        gsspSisap.Enter 1, 0
+    
+    End Select
     
     Set TelaProxima = New clsTela
     
@@ -159,14 +178,14 @@ End Function
 Public Function VoltaAncestralEmComum(ByRef Tela_Destino As clsTela) _
     As Integer
     
-    Dim nav As New clsNavegador
+    Dim Nav As New clsNavegador
     Dim tel1 As clsTela
     Dim telAux  As clsTela
     Dim voltarContador  As Integer
     
     Set tel1 = gsspSisap.Tela
     
-    nav.LocalizaTela tel1
+    Nav.LocalizaTela tel1
     voltarContador = 0
   
     Dim achou As Boolean
@@ -186,11 +205,11 @@ Public Function VoltaAncestralEmComum(ByRef Tela_Destino As clsTela) _
                 GoTo AchouAncestralEmComum
                 
             End If
-            Set telAux = nav.BuscaTela(telAux.AnteriorTela)
+            Set telAux = Nav.BuscaTela(telAux.AnteriorTela)
         Loop
         
       voltarContador = voltarContador + 1
-      Set tel1 = nav.BuscaTela(tel1.AnteriorTela)
+      Set tel1 = Nav.BuscaTela(tel1.AnteriorTela)
     Loop
     
 AchouAncestralEmComum:
@@ -202,7 +221,7 @@ AchouAncestralEmComum:
         gsspSisap.TelaInicial
     Else
         Debug.Print "Voltar " & voltarContador & " Telas."
-        nav.VoltaTela gsspSisap.Tela, VoltaAncestralEmComum
+        Nav.VoltaTela gsspSisap.Tela, VoltaAncestralEmComum
     End If
     Debug.Print "Ancestral Em Comum Tela " & VoltaAncestralEmComum
 End Function

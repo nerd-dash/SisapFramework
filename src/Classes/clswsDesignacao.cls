@@ -166,21 +166,22 @@ End Property
 Public Property Let CargasHorarias(CargasHorarias_ As clschsCargaHoraria)
 
     Set tbl = Range("Designacao.CargasHoraria")
-    Dim CargaHoraria As New clsCargaHoraria
+    
+    Dim Linha As Range
     
     For Each Linha In tbl.Rows
       
-        i = Linha.row - 19
-
+        i = Linha.row - (tbl.row - 1)
+        
         On Error GoTo TratarErro
 
-        Linha.Value2(1, 2) = CargasHorarias_.Item(i).Cod_Natureza
-        Linha.Value2(1, 3) = CargasHorarias_.Item(i).Tipo
-        Linha.Value2(1, 4) = CargasHorarias_.Item(i).Nivel
-        Linha.Value2(1, 5) = CargasHorarias_.Item(i).Modalidade
-        Linha.Value2(1, 6) = CargasHorarias_.Item(i).Materia
-        Linha.Value2(1, 7) = CargasHorarias_.Item(i).QuantidadeAulas
-        Linha.Value2(1, 8) = CargasHorarias_.Item(i).Turno
+        Linha.Cells(1, 2) = CargasHorarias_.Item(i).CodNatureza
+        Linha.Cells(1, 3) = CargasHorarias_.Item(i).Tipo
+        Linha.Cells(1, 4) = CargasHorarias_.Item(i).Nivel
+        Linha.Cells(1, 5) = CargasHorarias_.Item(i).Modalidade
+        Linha.Cells(1, 6) = CargasHorarias_.Item(i).Materia
+        Linha.Cells(1, 7) = CargasHorarias_.Item(i).QuantidadeAulas
+        Linha.Cells(1, 8) = CargasHorarias_.Item(i).Turno
         
     Next Linha
     

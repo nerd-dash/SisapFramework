@@ -32,7 +32,7 @@ Private Declare PtrSafe Function hllapi_setcursor Lib "libhllapi.dll" (ByVal add
 Private Declare PtrSafe Function hllapi_action Lib "libhllapi.dll" (ByVal text As String) As Integer
 
 
-Private Pw3270 As String
+
 Private MsgErro As String
 Private TempoEspera As Long
 Public pnavNavegador As New clsNavegador
@@ -78,9 +78,10 @@ Const MASK_REAIS_PONTUADO As String = "#.###,00"
 Private Sub Class_Initialize()
 
     MsgErro = Space(79)
-    TempoEspera = 10
+    TempoEspera = 20
     
-    If hllapi_init(JANELA_SISAP) <> 0 Then
+    If hllapi_init(JANELA_SISAP & ":a") <> 0 Then
+        Call Shell("TaskKill /PID " & glngPID, vbHide)
         JanelaErro "Não foi possível encontrar a Tela do SISAP. Se ela já está aberta feche e abra uma nova tela e refaça a ação. "
         EncerraSisap
     End If
@@ -116,6 +117,10 @@ Public Function EncerraSisap(Optional Alerta As Boolean = True)
     If Alerta Then
         JanelaErro "O script teve de ser interrompido!"
     End If
+    
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    
     End
 End Function
 Public Static Function Enter(Optional ByVal Repetir As Integer = 1, Optional ByVal IgnoraErro As Integer = -1) As Long
@@ -218,6 +223,8 @@ Public Static Function F5(Optional ByVal Repetir As Integer = 1, Optional ByVal 
     Next i
     F5 = NumeroErro
 End Function
+
+
 
 Public Static Function F7(Optional ByVal Repetir As Integer = 1, Optional ByVal IgnoraErro As Integer = -1) As Long
     Dim NumeroErro As Long
@@ -721,7 +728,8 @@ Public Function VerificaTituloTela(ByVal Titulo As String) As Boolean
 
     VerificaTituloTela = False
     
-    If PegaCampo(61, 4, 11) = Titulo Then
+    If PegaCampo(50, 4, 12) = UCase(Trim(Left(Titulo, _
+        Len(PegaCampo(50, 4, 12))))) Then
         VerificaTituloTela = True
     End If
     
@@ -730,7 +738,7 @@ End Function
 
 Public Function PegaTituloTela() As String
 
-    PegaTituloTela = PegaCampo(61, 4, 11)
+    PegaTituloTela = PegaCampo(50, 4, 12)
 
 End Function
 
@@ -770,8 +778,6 @@ Public Function AcessaComando(ByVal Comando As String, _
     End If
     PrimeiroCampo
 End Function
-
-
 
 
 

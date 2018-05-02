@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmLogin 
    Caption         =   "Abrir Nova Tela do Sisap"
-   ClientHeight    =   3015
+   ClientHeight    =   3030
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   4560
+   ClientWidth     =   4425
    OleObjectBlob   =   "frmLogin.frx":0000
    ShowModal       =   0   'False
 End
@@ -13,74 +13,76 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Sub CommandButton1_Click()
+Private Top As Double
+Private Left As Double
+Private Planilha As Worksheet
 
-    
-End Sub
 
 Public Sub btnAbrirSisap_Click()
 
-    Application.ScreenUpdating = False
-
-    glngPid = Shell("C:\Program Files\pw3270\pw3270.exe", vbMinimizedNoFocus)
-    
-    Debug.Print "Abrindo instância do Pw3270 com PID :" & glngPid
-    
-    Application.wait (Now + TimeValue("0:00:05"))
-    
-    Set Planilha = Sheets("Dados Ocultos")
-    
-    
-    Planilha.[Taxador.Login.Masp] = txtLoginMasp.text
-    Planilha.[Taxador.Login.Impressora] = txtLoginImpressora.text
-    
-    If chkLembraSenha.value Then
+    If Len(txtLoginMasp.value) > 0 And _
+        Len(txtLoginSenha.value) > 0 Then
+        Call Shell("TaskKill /PID " & glngPID, vbHide)
         
-        Planilha.[Taxador.Login.Senha] = txtLoginSenha.text
-        Planilha.[Taxador.Login.LembrarSenha] = True
-    Else
-        Planilha.[Taxador.Login.Senha] = ""
-        Planilha.[Taxador.Login.LembrarSenha] = False
-    End If
-    
-    
-    With gsspSisap
+        glngPID = Shell("C:\Program Files\pw3270\pw3270.exe --session=" & JANELA_SISAP, vbMinimizedNoFocus)
         
-        .Envia "SISAP"
-        Do
+        
+        Debug.Print "Abrindo instância do Pw3270 com PID :" & glngPID
+        
+        Application.wait (Now + TimeValue("0:00:05"))
+        
+        Set Planilha = wsDadosFormularios
+        
+        
+        Planilha.[frmLogin.Masp] = txtLoginMasp.text
+        Planilha.[frmLogin.Impressora] = txtLoginImpressora.text
+        
+        If chkLembraSenha.value Then
+            
+            Planilha.[frmLogin.Senha] = txtLoginSenha.text
+            Planilha.[frmLogin.LembrarSenha] = True
+        Else
+            Planilha.[frmLogin.Senha] = ""
+            Planilha.[frmLogin.LembrarSenha] = False
+        End If
+        
+        
+        With gsspSisap
+            
+            .Envia "SISAP"
+            Do
+                .Enter 1, 0
+            Loop While .PegaCampo(8, 1, 2) <> "PRODEMGE"
+            
+            .Envia txtLoginMasp.value
+            
+            If Len(txtLoginMasp.value) < 8 Then
+                .ProximoCampo
+            End If
+            
+            .Envia txtLoginSenha.value
+            
+            If Len(txtLoginSenha.value) < 8 Then
+                .ProximoCampo
+            End If
+            .ProximoCampo
+            .Envia txtLoginImpressora.value
             .Enter 1, 997
-        Loop While .PegaCampo(8, 1, 2) <> "PRODEMGE"
+            
+            .Envia "SIAP"
+            .Enter 1, 997
+            .Enter 1, 997
+            .EncerraSisap False
         
-        .Envia txtLoginMasp.value
+        End With
         
-        If Len(txtLoginMasp.value) < 8 Then
-            .ProximoCampo
-        End If
+    
         
-        .Envia txtLoginSenha.value
         
-        If Len(txtLoginSenha.value) < 8 Then
-            .ProximoCampo
-        End If
-        .ProximoCampo
-        .Envia txtLoginImpressora.value
-        .Enter 1, 997
+        'Call Shell("TaskKill /glngPid " & glngPid, vbHide)
+        'Debug.Print "Finaliza instância do Pw3270 com glngPid :" & glngPid
         
-        .Envia "SIAP"
-        .Enter 1, 997
-        .Enter 1, 997
-        .EncerraSisap False
-    
-    End With
-    
-    Application.ScreenUpdating = True
-    
-    
-    'Call Shell("TaskKill /glngPid " & glngPid, vbHide)
-    'Debug.Print "Finaliza instância do Pw3270 com glngPid :" & glngPid
-    
-    
-     
+    End If
      
 
 End Sub
@@ -106,13 +108,56 @@ Private Sub txtLoginSenha_Change()
 End Sub
 
 Private Sub UserForm_Activate()
-    Set Planilha = Sheets("Dados Ocultos")
-    chkLembraSenha.value = Planilha.[Taxador.Login.LembrarSenha]
-    txtLoginMasp.text = Planilha.[Taxador.Login.Masp]
-    txtLoginSenha.text = Planilha.[Taxador.Login.Senha]
-    txtLoginImpressora.text = Planilha.[Taxador.Login.Impressora]
+    
+    Set Planilha = wsGeral
+    
+    chkLembraSenha.value = Planilha.[frmLogin.LembrarSenha]
+    txtLoginMasp.text = Planilha.[frmLogin.Masp]
+    txtLoginSenha.text = Planilha.[frmLogin.Senha]
+    txtLoginImpressora.text = Planilha.[frmLogin.Impressora]
+    
+    Top = Planilha.[frmLogin.Top].Value2
+    Left = Planilha.[frmLogin.Left].Value2
+    
+    With Me
+        If Top = 0 And Left = 0 Then
+            .Top = Application.Top
+            .Left = Application.Left
+        Else
+            .Top = Top
+            .Left = Left
+        End If
+    End With
+
+End Sub
+
+Private Sub UserForm_BeforeDragOver(ByVal Cancel As MSForms.ReturnBoolean, ByVal Control As MSForms.Control, ByVal Data As MSForms.DataObject, ByVal X As Single, ByVal Y As Single, ByVal State As MSForms.fmDragState, ByVal Effect As MSForms.ReturnEffect, ByVal Shift As Integer)
+    
+ 
+
 End Sub
 
 Private Sub UserForm_Click()
+
+End Sub
+
+Private Sub UserForm_Deactivate()
+
+
+    
+End Sub
+
+Private Sub UserForm_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+
+End Sub
+
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+    With Me
+        Planilha.[frmLogin.Top].Value2 = .Top
+        Planilha.[frmLogin.Left].Value2 = .Left
+    End With
+End Sub
+
+Private Sub UserForm_Terminate()
 
 End Sub
