@@ -43,7 +43,7 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
     End With
 End Sub
 Private Sub btnEnviaAdm_Click()
-    gsspSisap.EnviaAdm CInt(txtAdmissao.text)
+    gsspSisap.EnviaAdm CInt(txtAdmissao.Text)
 End Sub
 
 
@@ -69,7 +69,7 @@ Private Sub btnEnviaMaspDv_Click()
 End Sub
 
 Private Sub btnEnviaOpcao_Click()
-    gsspSisap.EnviaOpcao CInt(txtOpcao.text)
+    gsspSisap.EnviaOpcao CInt(txtOpcao.Text)
 End Sub
 
 Private Sub btnMarcaX_Click()
@@ -81,7 +81,7 @@ Private Sub btnEnter_Click()
 End Sub
 
 Private Sub btnString_Click()
-    gsspSisap.Envia txtString.text
+    gsspSisap.Envia txtString.Text
 End Sub
 
 Private Sub CommandButton1_Click()

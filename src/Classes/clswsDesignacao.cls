@@ -285,7 +285,7 @@ End Property
 
 Public Property Get VerbaValeTransporte() As Integer
     value = wsAcertoDesignacao.[Designacao.Acerto.VerbaValeTransporte].Value2
-    VerbaRB = CInt(IIf(value = vbNullString, 0, value))
+    VerbaValeTransporte = CInt(IIf(value = vbNullString, 0, value))
 
 End Property
 Public Property Get VerbaValeTransporteValor() As Double
@@ -293,5 +293,18 @@ Public Property Get VerbaValeTransporteValor() As Double
     VerbaValeTransporteValor = CDbl(IIf(value = vbNullString, 0, value))
 
 End Property
+Public Property Get DespesaValeTransporte() As Integer
+    value = wsAcertoDesignacao.[Designacao.Acerto.DescontoValeTransporte].Value2
+    DespesaValeTransporte = CInt(IIf(value = vbNullString, 0, value))
 
+End Property
+Public Property Get DespesaValeTransporteValor() As Double
+    value = wsAcertoDesignacao.[Designacao.Acerto.DescontoValeTransporte.Valor].Value2
+    DespesaValeTransporteValor = CDbl(IIf(IsError(value), 0, value))
+
+End Property
+
+Public Property Get Ocorrencia() As Range
+   Set Ocorrencia = Range("Designacao.Acerto.Ocorrencia")
+End Property
 

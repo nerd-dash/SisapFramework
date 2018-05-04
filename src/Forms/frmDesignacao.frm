@@ -17,6 +17,22 @@ Private Top As Double
 Private Left As Double
 Private Planilha As wsDadosFormularios
 
+Private Sub btnSalvaAcerto_Click()
+    ImprimeAcertoDesignacao
+End Sub
+
+Private Sub btnImprimeAcerto_Click()
+
+End Sub
+
+Private Sub btnNovaDesignacao_Click()
+    gdsgDesigncao.NovaDesigncao
+End Sub
+
+Private Sub CommandButton2_Click()
+    
+End Sub
+
 Private Sub UserForm_Initialize()
 
     Set Planilha = wsDadosFormularios
@@ -49,7 +65,7 @@ Private Sub btnAfastamentoSubs_Click()
 End Sub
 
 Private Sub btnCargaHorariaSubs_Click()
-    Pesquisar_Carga_Horaria_Vigente Date, gdsgDesigncao.SubstituidoMaspDv, _
+    NavPesquisarCargaHorariaVigente Date, gdsgDesigncao.SubstituidoMaspDv, _
         gdsgDesigncao.SubstituidoAdmissao, 52, 65
 End Sub
 
@@ -70,6 +86,7 @@ Private Sub btnDesligamento_Click()
 End Sub
 
 Private Sub btnEnviaVerbasAcerto_Click()
+    'PegaVerbasCargoRecebimento
     EnviaVerbasDeAcerto
 End Sub
 

@@ -136,7 +136,7 @@ Private Sub btnDesativarAssitMedicaIpsemg_Click()
 On Error GoTo ErrorHandler
     
     AtualizaMaspDvAdm
-    NavDesativarAssitMedicaIPSEMG
+    AssistenciaMedicaIpsemgDesativada
     
     EventosHabilitados True
     

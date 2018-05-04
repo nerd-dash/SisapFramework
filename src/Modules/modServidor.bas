@@ -469,4 +469,45 @@ Public Function BuscaDadosAtuaisServidor()
             
 End Function
 
+Public Function AssistenciaMedicaIpsemgDesativada() As Boolean
+    
+    Dim Tela As clsTela
+    Dim Lancamento As String
+    Dim Adm As Integer
+    
+    NavDesativarAssitMedicaIPSEMG
+    
+    Set Tela = gsspSisap.Tela
+    
+    
+    If Tela.Indice = 120 Then
+        
+        Dim i As Long
+        i = 12
+        Do
+            Adm = gsspSisap.PegaCampoNumerico(1, i, 17)
+            If Adm <> 0 Then
+                gsspSisap.MarcarOpcao
+                gsspSisap.Enter 1, 4
+                Lancamento = gsspSisap.PegaCampo(1, 10, 47)
+                If Not Lancamento = vbNullString Then
+                    Exit Do
+                End If
+                NavDesativarAssitMedicaIPSEMG
+                i = i + 1
+                gsspSisap.ProximaLinha i - 12
+            End If
+        Loop While Adm <> 0
+    
+    ElseIf Tela.Indice = 96 Then
+        Lancamento = gsspSisap.PegaCampo(1, 10, 74)
+    End If
+    
+    AssistenciaMedicaIpsemgDesativada = Not Lancamento = vbNullString
+    
+    If AssistenciaMedicaIpsemgDesativada Then
+        Beep
+    End If
+    
+End Function
 

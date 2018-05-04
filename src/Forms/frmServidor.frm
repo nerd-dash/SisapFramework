@@ -48,7 +48,7 @@ Private Sub btnCargaHoraria_Click()
 End Sub
 
 Private Sub btnConsultaIpseng_Click()
-    NavDesativarAssitMedicaIPSEMG
+    AssistenciaMedicaIpsemgDesativada
 End Sub
 
 Private Sub btnContaBancaria_Click()

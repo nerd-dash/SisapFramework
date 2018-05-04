@@ -37,4 +37,11 @@
 	- A janela do Sisap aberta pelo formulário de login agora vem identificada com "SISAP:A" no nome. Isso tende a permitir a utilização de outras telas ao mesmo tempo.
 	- Planilha já busca acertos (Vantagens e Descontos) no sistema e popula tabelas.
 	- Classe de manipulação de interface visual. (Formulários)
+	- Formulário de Pesquisas Rápidas
 	- Form de Login não funciona mais sem dados de masp e senha inseridos.
+-0.2.4.5
+	- Botão Nova Designação
+	- Inclui os descontos no acerto de designação
+	- Faz calculo do desconto do Ipsemg e inclui no acerto
+	- Salva acerto em pdf
+	- A descrição da ocorrência fica na àrea de transferência ao concluir a inclusão do acerto de designação

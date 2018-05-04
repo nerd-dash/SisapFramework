@@ -35,33 +35,8 @@ End Property
 
 ''Procedure para Testes rápido
 Sub A_TableTest()
-    
-    FunctionNavDadosFinanceirosMesesAnteriores
-   'NavPesquisarCargaHorariaVigente
-    'gestEstilo.Fundo Range("A1:N175")
-    ''gestEstilo.FormularioFundo Range("B2:M15")
-   ' gestEstilo.FormularioTitulo Range("C3:L3")
-    'gestEstilo.FormularioGrupo Range("C9:L14")
-   
-    
 
-    
-
-    
-    'gsspSisap.BuscaJanelaSisap
-    
-
-
-
- 'PegaVerbasCargoRecebimento
-'    Debug.Print ActiveSheet.Name
- '   ActiveSheet.Range("Area_de_impressao").ExportAsFixedFormat Type:=xlTypePDF, _
-                                              Filename:=ActiveSheet.Name, _
-                                              Quality:=xlQualityStandard, _
-                                              IncludeDocProperties:=True, _
-                                              IgnorePrintAreas:=False, _
-                                              OpenAfterPublish:=True
-   
+    PegaVerbasCargoRecebimento
 
 End Sub
 
@@ -137,3 +112,4 @@ Public Function EventosHabilitados(ByVal bool As Boolean)
     Application.EnableEvents = bool
     Application.ScreenUpdating = bool
 End Function
+

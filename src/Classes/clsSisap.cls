@@ -16,20 +16,20 @@ Private Declare PtrSafe Function hllapi_wait_for_ready Lib "libhllapi.dll" (ByVa
 Private Declare PtrSafe Function hllapi_wait Lib "libhllapi.dll" (ByVal timeout As Integer) As Long
 Private Declare PtrSafe Function hllapi_get_message_id Lib "libhllapi.dll" () As Long
 Private Declare PtrSafe Function hllapi_is_connected Lib "libhllapi.dll" () As Long
-Private Declare PtrSafe Function hllapi_get_screen Lib "libhllapi.dll" (ByVal offset As Integer, ByVal text As String, ByVal length As Integer) As Long
-Private Declare PtrSafe Function hllapi_get_screen_at Lib "libhllapi.dll" (ByVal row As Integer, ByVal col As Integer, ByVal text As String) As Long
-Private Declare PtrSafe Function hllapi_set_text_at Lib "libhllapi.dll" (ByVal row As Integer, ByVal col As Integer, ByVal text As String) As Long
-Private Declare PtrSafe Function hllapi_cmp_text_at Lib "libhllapi.dll" (ByVal row As Integer, ByVal col As Integer, ByVal text As String) As Long
-Private Declare PtrSafe Function hllapi_find_text Lib "libhllapi.dll" (ByVal text As String) As Long
+Private Declare PtrSafe Function hllapi_get_screen Lib "libhllapi.dll" (ByVal offset As Integer, ByVal Text As String, ByVal length As Integer) As Long
+Private Declare PtrSafe Function hllapi_get_screen_at Lib "libhllapi.dll" (ByVal row As Integer, ByVal col As Integer, ByVal Text As String) As Long
+Private Declare PtrSafe Function hllapi_set_text_at Lib "libhllapi.dll" (ByVal row As Integer, ByVal col As Integer, ByVal Text As String) As Long
+Private Declare PtrSafe Function hllapi_cmp_text_at Lib "libhllapi.dll" (ByVal row As Integer, ByVal col As Integer, ByVal Text As String) As Long
+Private Declare PtrSafe Function hllapi_find_text Lib "libhllapi.dll" (ByVal Text As String) As Long
 Private Declare PtrSafe Function hllapi_enter Lib "libhllapi.dll" () As Long
 Private Declare PtrSafe Function hllapi_pfkey Lib "libhllapi.dll" (ByVal keycode As Integer) As Long
 Private Declare PtrSafe Function hllapi_pakey Lib "libhllapi.dll" (ByVal keycode As Integer) As Long
-Private Declare PtrSafe Function hllapi_set_session_parameter Lib "libhllapi.dll" (ByVal text As String, ByVal size As Integer, ByVal value As Integer) As Long
-Private Declare PtrSafe Function hllapi_set_charset Lib "libhllapi.dll" (ByVal text As String, ByVal size As Integer, ByVal value As Integer) As Long
+Private Declare PtrSafe Function hllapi_set_session_parameter Lib "libhllapi.dll" (ByVal Text As String, ByVal size As Integer, ByVal value As Integer) As Long
+Private Declare PtrSafe Function hllapi_set_charset Lib "libhllapi.dll" (ByVal Text As String, ByVal size As Integer, ByVal value As Integer) As Long
 Private Declare PtrSafe Function hllapi_set_unlock_delay Lib "libhllapi.dll" (ByVal delay As Integer) As Long
 Private Declare PtrSafe Function hllapi_getcursor Lib "libhllapi.dll" () As Long
 Private Declare PtrSafe Function hllapi_setcursor Lib "libhllapi.dll" (ByVal addr As Integer) As Long
-Private Declare PtrSafe Function hllapi_action Lib "libhllapi.dll" (ByVal text As String) As Integer
+Private Declare PtrSafe Function hllapi_action Lib "libhllapi.dll" (ByVal Text As String) As Integer
 
 
 

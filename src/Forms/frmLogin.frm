@@ -34,12 +34,12 @@ Public Sub btnAbrirSisap_Click()
         Set Planilha = wsDadosFormularios
         
         
-        Planilha.[frmLogin.Masp] = txtLoginMasp.text
-        Planilha.[frmLogin.Impressora] = txtLoginImpressora.text
+        Planilha.[frmLogin.Masp] = txtLoginMasp.Text
+        Planilha.[frmLogin.Impressora] = txtLoginImpressora.Text
         
         If chkLembraSenha.value Then
             
-            Planilha.[frmLogin.Senha] = txtLoginSenha.text
+            Planilha.[frmLogin.Senha] = txtLoginSenha.Text
             Planilha.[frmLogin.LembrarSenha] = True
         Else
             Planilha.[frmLogin.Senha] = ""
@@ -112,9 +112,9 @@ Private Sub UserForm_Activate()
     Set Planilha = wsGeral
     
     chkLembraSenha.value = Planilha.[frmLogin.LembrarSenha]
-    txtLoginMasp.text = Planilha.[frmLogin.Masp]
-    txtLoginSenha.text = Planilha.[frmLogin.Senha]
-    txtLoginImpressora.text = Planilha.[frmLogin.Impressora]
+    txtLoginMasp.Text = Planilha.[frmLogin.Masp]
+    txtLoginSenha.Text = Planilha.[frmLogin.Senha]
+    txtLoginImpressora.Text = Planilha.[frmLogin.Impressora]
     
     Top = Planilha.[frmLogin.Top].Value2
     Left = Planilha.[frmLogin.Left].Value2

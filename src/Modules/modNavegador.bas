@@ -834,9 +834,9 @@ EncontaPosicaoNoCaminho:
             GoTo EncontaPosicaoNoCaminho
         ElseIf Tela.Indice = 86 Then 'Envia masp e adm
             .PrimeiroCampo
-            .EnviaMaspDv gdsvServidor.MaspDv
+            .EnviaMaspDv MaspDv
             .ProximoCampo 8
-            .EnviaAdm gdsvServidor.Admisao
+            .EnviaAdm Admissao
             .Enter 1
             GoTo EncontaPosicaoNoCaminho
         ElseIf Tela.Indice = 16 Then 'Envia masp e adm
@@ -1011,14 +1011,14 @@ EncontaPosicaoNoCaminho:
         ElseIf Tela.Indice = 95 Then 'Masp e Adm
             .PrimeiroCampo
             .EnviaMaspDv gdsvServidor.MaspDv
-            .EnviaAdm gdsvServidor.Admisao
+            '.EnviaAdm gdsvServidor.Admisao
             .Enter 1, 4
             GoTo EncontaPosicaoNoCaminho
-        ElseIf Caminho.Item(3).Equals(Tela) Then
-            Debug.Print "Navegou Férias Regulamentares"
+        ElseIf Tela.Indice = 120 Or Caminho.Item(3).Equals(Tela) Then
+            Debug.Print "Pesquisa Desativacao assistencia medica - IPSEMG"
         Else
             gsspSisap.JanelaAlerta "Não foi possível navegar até : " & vbNewLine _
-                & " 13 - Férias Regulamentares"
+                & " 01 - Pesquisa Desativacao assistencia medica - IPSEMG"
         End If
         
     End With
@@ -1289,5 +1289,44 @@ EncontaPosicaoNoCaminho:
         
     End With
 End Function
-
+Public Function NavPesquisaDesativarAssitMedicaIPSEMG()
+    With gsspSisap
+        
+        Set Tela = gnavNavegador.BuscaTela(96)
+        
+        gnavNavegador.VoltaAncestralEmComum Tela
+        
+        Set Caminho = gnavNavegador.CaminhoParaTela(Tela)
+        '1,42,96,
+        
+        
+EncontaPosicaoNoCaminho:
+        
+        Set Tela = gsspSisap.Tela
+        
+        If Caminho.Item(1).Equals(Tela) Then 'Tela do Menu Principal
+            DesativarAssitMedicaIPSEMG
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Caminho.Item(2).Equals(Tela) Then
+            'Menu Pesquisa dados do Serv.
+            .PrimeiroCampo
+            .Envia "01P"
+            .Enter
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 95 Then 'Masp e Adm
+            .PrimeiroCampo
+            .EnviaMaspDv gdsvServidor.MaspDv
+            '.EnviaAdm gdsvServidor.Admisao
+            .Enter 1, 4
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Caminho.Item(3).Equals(Tela) Then
+            Debug.Print "Navegou Férias Regulamentares"
+        Else
+            gsspSisap.JanelaAlerta "Não foi possível navegar até : " & vbNewLine _
+                & " 13 - Férias Regulamentares"
+        End If
+        
+    End With
+    
+End Function
 

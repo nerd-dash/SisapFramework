@@ -59,8 +59,6 @@ Public Property Get QtdEspecif() As Double
 
 End Property
 
-
-
 Public Property Let Operacao(Operacao_ As String)
 
     pOperacao = Operacao_
@@ -104,3 +102,23 @@ Public Property Let QtdEspecif(QtdEspecif_ As Double)
     pQtdEspecif = QtdEspecif_
 
 End Property
+
+Public Function PreencheVerba(ByVal Linha As Long)
+        
+        Dim Verba As Long
+        
+        With gsspSisap
+            
+            Verba = .PegaVerba(Linha, 5)
+            
+            If Verba <> 0 Then
+                pVerba = Verba
+                pOperacao = .PegaCampo(1, Linha, 3)
+                pDataInicio = .PegaData(14, Linha, 11)
+                pDataFim = .PegaData(14, Linha, 25)
+                pQtdEspecif = .PegaCampoMoeda(11, True, Linha, 40)
+                pValor = .PegaCampoMoeda(10, True, Linha, 52)
+                pVigencia = .PegaData(14, Linha, 63)
+            End If
+        End With
+End Function
