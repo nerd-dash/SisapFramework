@@ -133,7 +133,6 @@ Public Function NovaConversao()
 
 End Function
 
-
 Private Sub Class_Initialize()
     Set Planilha = wsFeriasPremioConversao
 End Sub

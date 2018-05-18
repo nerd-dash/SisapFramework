@@ -68,7 +68,7 @@ Public Sub TesteDadosdoServidor()
     Debug.Assert gdsvServidor.Nome = "JOSINEIDE BEZERRA NOBREGA DA SILVA"
     Debug.Assert gdsvServidor.Cargo = "PEBD1A"
     Debug.Assert gdsvServidor.Lotacao = "0"
-    Debug.Assert gdsvServidor.Exercicio = ""
+    Debug.Assert gdsvServidor.Exercicio = "EE BRASIL"
     
 '############################################################
 

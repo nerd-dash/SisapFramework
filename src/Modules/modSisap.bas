@@ -97,6 +97,22 @@ Public Sub PesquisaInspecaoMedica()
         End If
     End With
 End Sub
+Public Sub FaltasConsolidadasPagamento()
+    With gsspSisap
+         If Not gsspSisap.Tela.Indice = 121 Then
+            .AcessaComando "FALTAS CONSOLIDADAS PAGAMENTO"
+            .PrimeiroCampo
+        End If
+    End With
+End Sub
+Public Sub HistoricoServidor()
+    With gsspSisap
+         If Not gsspSisap.Tela.Indice = 18 Then
+            .AcessaComando "HISTORICO SERVIDOR"
+            .PrimeiroCampo
+        End If
+    End With
+End Sub
 
 
 

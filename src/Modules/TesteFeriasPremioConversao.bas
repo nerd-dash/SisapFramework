@@ -33,9 +33,7 @@ Public Sub TesteFPConversao()
 
     '##################
     Application.EnableEvents = False
-    
 
-    
     Before
     
     gdsvServidor.MaspDv = 2875235

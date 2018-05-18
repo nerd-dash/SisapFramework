@@ -563,6 +563,9 @@ EncontaPosicaoNoCaminho:
             .EnviaMaspDv gdsvServidor.MaspDv
             .Enter 1
             GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 16 Then 'Identifica Cargo
+            IdentificarCargo 12, 21, 24, 8, DATA_EM_ABERTO, 52, 65
+            GoTo EncontaPosicaoNoCaminho
         ElseIf Caminho.Item(3).Equals(Tela) Then
             Debug.Print "Navegou Documentos"
         Else
@@ -725,6 +728,9 @@ EncontaPosicaoNoCaminho:
             .EnviaMaspDv gdsvServidor.MaspDv
             .EnviaAdm gdsvServidor.Admisao
             .Enter 1
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 16 Then 'Identifica Cargo
+            IdentificarCargo 12, 21, 24, 8, DATA_EM_ABERTO, 52, 65
             GoTo EncontaPosicaoNoCaminho
         ElseIf Caminho.Item(4).Equals(Tela) Then
             Debug.Print "Navegou Afastamentos"
@@ -901,7 +907,18 @@ EncontaPosicaoNoCaminho:
     
 End Function
 
-Public Function NavFaltasConsolidadas()
+Public Function NavFaltasConsolidadas( _
+    Optional ByVal MaspDv As Long = 0, _
+    Optional ByVal Admissao As Integer = 0)
+    
+    If MaspDv = 0 Then
+        MaspDv = gdsvServidor.MaspDv
+    End If
+    
+    If Admissao = 0 Then
+        Admissao = gdsvServidor.Admisao
+    End If
+    
     With gsspSisap
         
         Set Tela = gnavNavegador.BuscaTela(92)
@@ -926,8 +943,8 @@ EncontaPosicaoNoCaminho:
             GoTo EncontaPosicaoNoCaminho
         ElseIf Caminho.Item(3).Equals(Tela) Then 'TELA 3
             .PrimeiroCampo
-            .EnviaMaspDv gdsvServidor.MaspDv
-            .EnviaAdm gdsvServidor.Admisao
+            .EnviaMaspDv MaspDv
+            .EnviaAdm Admissao
             .Enter
             GoTo EncontaPosicaoNoCaminho
         ElseIf Tela.Indice = 22 Or _
@@ -1318,6 +1335,9 @@ EncontaPosicaoNoCaminho:
             .EnviaMaspDv gdsvServidor.MaspDv
             '.EnviaAdm gdsvServidor.Admisao
             .Enter 1, 4
+        GoTo EncontaPosicaoNoCaminho
+            ElseIf Tela.Indice = 16 Then 'Identifica Cargo
+            IdentificarCargo 12, 21, 24, 8, DATA_EM_ABERTO, 52, 65
             GoTo EncontaPosicaoNoCaminho
         ElseIf Caminho.Item(3).Equals(Tela) Then
             Debug.Print "Navegou Férias Regulamentares"
@@ -1330,3 +1350,130 @@ EncontaPosicaoNoCaminho:
     
 End Function
 
+Public Function NavIncluirFaltasConsolidadas( _
+    Optional ByVal Data As Date, _
+    Optional ByVal MaspDv As Long = 0, _
+    Optional ByVal Admissao As Integer = 0)
+    
+    If Data = DATA_VAZIA Then
+        Data = Date
+    End If
+    
+    If MaspDv = 0 Then
+        MaspDv = gdsvServidor.MaspDv
+    End If
+    
+    If Admissao = 0 Then
+        Admissao = gdsvServidor.Admisao
+    End If
+    
+    With gsspSisap
+        
+        Set Tela = gnavNavegador.BuscaTela(124)
+        
+        If Not gsspSisap.Tela.Indice = 122 Then
+            gnavNavegador.VoltaAncestralEmComum Tela
+        End If
+        
+        Set Caminho = gnavNavegador.CaminhoParaTela(Tela)
+        '1,121,124,
+        
+        
+EncontaPosicaoNoCaminho:
+        
+        Set Tela = gsspSisap.Tela
+        
+        If Caminho.Item(1).Equals(Tela) Then 'Tela do Menu Principal
+            FaltasConsolidadasPagamento
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Caminho.Item(2).Equals(Tela) Then
+            'Menu Pesquisa dados do Serv.
+            .PrimeiroCampo
+            .EnviaOpcao 1
+            .Enter
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 122 Then 'Masp e Adm
+            .PrimeiroCampo
+            .EnviaMaspDv MaspDv
+            .EnviaAdm Admissao
+            .Enter 1, 4
+            GoTo EncontaPosicaoNoCaminho
+         ElseIf Tela.Indice = 16 Then
+            IdentificarCargo 12, 21, 24, 8, Data, 52, 65
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Caminho.Item(3).Equals(Tela) Then
+            Debug.Print "Navegou Incluir Faltas Consolidadas"
+        Else
+            gsspSisap.JanelaAlerta "Não foi possível navegar até : " & vbNewLine _
+                & " 01 - Incluir   Faltas Consolidadas"
+        End If
+        
+    End With
+End Function
+
+Public Function NavIncluirHistoricoFaltasConsolidadas( _
+    Optional ByVal Data As Date, _
+    Optional ByVal MaspDv As Long = 0, _
+    Optional ByVal Admissao As Integer = 0)
+    
+    If Data = DATA_VAZIA Then
+        Data = Date
+    End If
+    
+    If MaspDv = 0 Then
+        MaspDv = gdsvServidor.MaspDv
+    End If
+    
+    If Admissao = 0 Then
+        Admissao = gdsvServidor.Admisao
+    End If
+    
+    With gsspSisap
+        
+        Set Tela = gnavNavegador.BuscaTela(129)
+        
+        If Not gsspSisap.Tela.Indice = 128 Then
+            gnavNavegador.VoltaAncestralEmComum Tela
+        End If
+        
+        Set Caminho = gnavNavegador.CaminhoParaTela(Tela)
+        '1,127,130,
+        
+        
+EncontaPosicaoNoCaminho:
+        
+        Set Tela = gsspSisap.Tela
+        
+        If Caminho.Item(1).Equals(Tela) Then 'TELA 1
+            HistoricoServidor
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 18 Then 'TELA 2
+            .PrimeiroCampo
+            .EnviaOpcao 20
+            .Enter
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Caminho.Item(2).Equals(Tela) Then 'TELA 2
+            .PrimeiroCampo
+            .EnviaOpcao 1
+            .Enter
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 128 Then 'TELA 3
+            .PrimeiroCampo
+            .EnviaMaspDv MaspDv
+            .EnviaAdm Admissao
+            .Enter
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Tela.Indice = 16 Then 'Identifica Cargo
+            IdentificarCargo 12, 21, 24, 8, Data, 52, 65
+            GoTo EncontaPosicaoNoCaminho
+        ElseIf Caminho.Item(3).Equals(Tela) Then 'TELA 4
+            Debug.Print "Navegou Incluir   Historico Faltas Consolidadas"
+        Else
+            gsspSisap.JanelaAlerta "Não foi possível navegar até : " & vbNewLine _
+                & " 01 - Incluir   Historico Faltas Consolidadas"
+
+        End If
+        
+    End With
+    
+End Function

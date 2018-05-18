@@ -4,8 +4,8 @@ Public Function PegaVerbasCargoRecebimento( _
     Optional ByVal LinhaFinal As Integer = 20)
     
     NavPesquisaDadosFinanceirosCargoRecebimento
-    Dim Vantagens As New clsAcertoVantagem
-    Dim Desconto As New clsAcertoDesconto
+    Dim Vantagens As New clswsAcertoVantagem
+    Dim Desconto As New clswsAcertoDesconto
     
     PegaVerbas Vantagens
     gsspSisap.Enter
@@ -60,4 +60,19 @@ Private Function PegaVerbas(ByRef acerto As IVerbas, _
     End With
 
 
+End Function
+Public Function CalculaVerbaIPSEMG(ByVal Valor As Double) As Double
+    
+    Dim dbl As Double
+    
+    dbl = (Valor * 3.2) / 100
+    
+    If dbl <= 30 Then
+        dbl = 30
+    ElseIf dbl >= 250 Then
+        dbl = 250
+    End If
+    
+    CalculaVerbaIPSEMG = dbl
+    
 End Function

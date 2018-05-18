@@ -60,7 +60,7 @@ End Sub
 
 Private Sub btnAfastamentoSubs_Click()
     
-    Pesquisar_Afastamentos gdsgDesigncao.SubstituidoMaspDv, _
+    PesquisarAfastamentos gdsgDesigncao.SubstituidoMaspDv, _
         gdsgDesigncao.SubstituidoAdmissao
 End Sub
 
@@ -103,8 +103,11 @@ Private Sub btnFPSubs_Click()
 End Sub
 
 Private Sub btnPlanilha_Click()
+    ThisWorkbook.Unprotect
+    
     Dim bool As Boolean
     bool = Not wsAcertoDesignacao.Visible
+
     wsAcertoDesignacao.Visible = bool
     
     If bool Then
@@ -113,6 +116,7 @@ Private Sub btnPlanilha_Click()
         wsDesignacao.Activate
     End If
     
+    ThisWorkbook.Protect
     
 End Sub
 

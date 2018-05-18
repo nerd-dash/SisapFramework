@@ -378,9 +378,10 @@ Public Function IdentificarCargo(ByVal LinhaInicial As Integer, _
                     DataFinal = .PegaData(10, i, ColunaDataFinal)
                     
                     If (Natureza = 6 Or Natureza = 7) _
-                    And DataEstaEntre(Data, _
+                    And (DataEstaEntre(Data, _
                         DataInicio, _
-                        DataFinal) Then
+                        DataFinal) Or _
+                        Data = DATA_EM_ABERTO) Then
                         
                         .MarcarOpcao i, ColunaOpcao
                         .Enter

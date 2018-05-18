@@ -20,13 +20,6 @@ Private Planilha As wsDadosFormularios
 Private lngTempGMaspDv As Long
 Private intTempGAdm As Integer
 
-Private Sub Label3_Click()
-
-End Sub
-
-Private Sub tabCategorias_Change()
-
-End Sub
 
 Private Sub btnAfastamentos_Click()
 On Error GoTo ErrorHandler
@@ -524,6 +517,7 @@ ErrorHandler:
     EventosHabilitados True
 End Sub
 
+
 Private Sub UserForm_Initialize()
 
     Set Planilha = wsDadosFormularios
@@ -550,11 +544,24 @@ Private Sub UserForm_Initialize()
     
     
 End Sub
+
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+    
     With Me
         Planilha.[frmPesquisasRapidas.Top].Value2 = .Top
         Planilha.[frmPesquisasRapidas.Left].Value2 = .Left
     End With
+    
+    Planilha.[frmPesquisasRapidas.MaspDv].Value2 = txtMaspDV
+    Planilha.[frmPesquisasRapidas.Adm].Value2 = txtAdm
+    
+    EventosHabilitados False
+    
+    gdsvServidor.MaspDv = lngTempGMaspDv
+    gdsvServidor.Admisao = intTempGAdm
+    
+    EventosHabilitados True
+    
 End Sub
 
 Private Function AtualizaMaspDvAdm()
@@ -567,15 +574,4 @@ Private Function AtualizaMaspDvAdm()
     EventosHabilitados True
     
 End Function
-Private Sub UserForm_Terminate()
 
-    Planilha.[frmPesquisasRapidas.MaspDv].Value2 = txtMaspDV
-    Planilha.[frmPesquisasRapidas.Adm].Value2 = txtAdm
-
-    EventosHabilitados False
-    
-    gdsvServidor.MaspDv = lngTempGMaspDv
-    gdsvServidor.Admisao = intTempGAdm
-    
-    EventosHabilitados True
-End Sub

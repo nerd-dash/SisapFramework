@@ -16,7 +16,7 @@ Sub TestesDesignicoes()
     modRecursos.EventosHabilitados False
     
     gdsvServidor.MaspDv = 13169842
-    gdsvServidor.Admisao = 2
+    gdsvServidor.Admisao = 3
     
     modRecursos.EventosHabilitados True
     
@@ -25,17 +25,18 @@ Sub TestesDesignicoes()
     gdsgDesigncao.Cargo = "PEBD1A"
     gdsgDesigncao.SituacaoExercicio = 9
     gdsgDesigncao.CategoriaProfisisonal = 0
-    gdsgDesigncao.SubstituidoMaspDv = 10516169
-    gdsgDesigncao.SubstituidoAdmissao = 2
-    gdsgDesigncao.SubstituidoGrupoNatureza = 27
-    gdsgDesigncao.DataInicial = #4/4/2018#
-    gdsgDesigncao.DataFinal = #6/4/2018#
+    gdsgDesigncao.SubstituidoMaspDv = 0
+    gdsgDesigncao.SubstituidoAdmissao = 0
+    gdsgDesigncao.SubstituidoGrupoNatureza = 20
+    gdsgDesigncao.DataInicial = Date
+    gdsgDesigncao.DataFinal = _
+        DateSerial(Year(Date), Month(Date) + 2, Day(Date))
     
     Set Ch1 = New clsCargaHoraria
     Set Ch2 = New clsCargaHoraria
     Set Chs = New clschsCargaHoraria
     
-    Ch1.CodNatureza = 10
+    Ch1.CodNatureza = 1
     Ch1.Tipo = 1
     Ch1.Nivel = 3
     Ch1.Modalidade = 2
@@ -45,7 +46,7 @@ Sub TestesDesignicoes()
     
     Chs.Add Ch1
     
-    Ch2.CodNatureza = 10
+    Ch2.CodNatureza = 1
     Ch2.Tipo = 1
     Ch2.Nivel = 4
     Ch2.Modalidade = 2
@@ -66,7 +67,7 @@ Sub TestesDesignicoes()
     gdsgDesigncao.NovaDesigncao
     
     gdsvServidor.MaspDv = 14571624
-    gdsvServidor.Admisao = 2
+    gdsvServidor.Admisao = 9
     
     'Vai buscar dados do servidor
     gdsgDesigncao.LetUnidadeAdministrativa "159841"
@@ -76,8 +77,8 @@ Sub TestesDesignicoes()
     gdsgDesigncao.SubstituidoMaspDv = 0
     gdsgDesigncao.SubstituidoAdmissao = 0
     gdsgDesigncao.SubstituidoGrupoNatureza = 0
-    gdsgDesigncao.DataInicial = #4/2/2018#
-    gdsgDesigncao.DataFinal = #12/31/2018#
+    gdsgDesigncao.DataFinal = _
+        DateSerial(Year(Date), Month(Date) + 2, Day(Date))
     
     Set Ch1 = New clsCargaHoraria
     Set Ch2 = New clsCargaHoraria
@@ -104,7 +105,7 @@ Sub TestesDesignicoes()
     gdsgDesigncao.NovaDesigncao
     
     gdsvServidor.MaspDv = 14544852
-    gdsvServidor.Admisao = 2
+    gdsvServidor.Admisao = 9
     
     'Vai buscar dados do servidor
     gdsgDesigncao.LetUnidadeAdministrativa "160164"
@@ -114,8 +115,8 @@ Sub TestesDesignicoes()
     gdsgDesigncao.SubstituidoMaspDv = 0
     gdsgDesigncao.SubstituidoAdmissao = 0
     gdsgDesigncao.SubstituidoGrupoNatureza = 0
-    gdsgDesigncao.DataInicial = #3/15/2018#
-    gdsgDesigncao.DataFinal = #12/31/2018#
+    gdsgDesigncao.DataFinal = _
+        DateSerial(Year(Date), Month(Date) + 2, Day(Date))
     
     Set Ch1 = New clsCargaHoraria
     Set Ch2 = New clsCargaHoraria

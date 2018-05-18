@@ -52,9 +52,9 @@ Public Property Get CategoriaProfisisonal() As Integer
     
 End Property
 
-Public Property Let CategoriaProfisisonal(Num As Integer)
+Public Property Let CategoriaProfisisonal(num As Integer)
     
-    Planilha.[Designacao.CategoriaProfisisonal] = Num
+    Planilha.[Designacao.CategoriaProfisisonal] = num
     
 End Property
 
@@ -64,9 +64,9 @@ Public Property Get SituacaoExercicio() As Integer
     
 End Property
 
-Public Property Let SituacaoExercicio(Num As Integer)
+Public Property Let SituacaoExercicio(num As Integer)
     
-    Planilha.[Designacao.SituacaoExercicio] = Num
+    Planilha.[Designacao.SituacaoExercicio] = num
     
 End Property
 

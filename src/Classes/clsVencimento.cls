@@ -23,7 +23,7 @@ End Property
 
 
 Public Function DefineSubisido(ByVal DataVencimento As Date) As String
-    Dim resposta As Integer
+    Dim Resposta As Integer
     
     If pSubsidio = "" Then
    
@@ -32,12 +32,12 @@ Public Function DefineSubisido(ByVal DataVencimento As Date) As String
          Case Is < #1/1/2011#
              pSubsidio = "N"
          Case Is < #1/1/2012#
-             resposta = _
+             Resposta = _
                  MsgBox("Em " & Format(DataVencimento, "dd/mm/yyyy") & _
                  " o servidor estava no SUBSÍDIO ?", _
                  vbYesNo + vbQuestion, _
                  "Tipo de Vencimento")
-             If resposta = vbYes Then
+             If Resposta = vbYes Then
                  pSubsidio = "S"
              Else
                  pSubsidio = "N"

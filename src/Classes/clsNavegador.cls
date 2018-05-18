@@ -27,6 +27,8 @@ Public Function AdicionaProximaTela(ByVal Numero_da_Funcao As Integer)
     Dim TelaProxima As clsTela
     Dim TelaAnterior As clsTela
     
+    On Error GoTo LogaErro
+
     adiciona = True
     
     Select Case Numero_da_Funcao
@@ -95,14 +97,24 @@ Public Function AdicionaProximaTela(ByVal Numero_da_Funcao As Integer)
     
         MsgBox "A tela já foi inserida no mapa"
     End If
-        
+    
+Exit Function
+LogaErro:
+
+    Dim Erro As IErro
+    Set Erro = New clsErro
+    
+    Erro.LogaErro Err, "clsNavegador.BuscaTela"
 End Function
+
 
 Public Function BuscaTela(ByVal Indice As Long) As clsTela
     
     Set BuscaTela = New clsTela
     Dim Linha As Range
-        
+    
+    On Error GoTo LogaErro
+
     For Each Linha In rngArvoreMenus.Rows
         
         If Indice = 0 Then
@@ -126,13 +138,22 @@ Public Function BuscaTela(ByVal Indice As Long) As clsTela
             Exit For
         End If
     Next Linha
+Exit Function
+LogaErro:
+
+    Dim Erro As IErro
+    Set Erro = New clsErro
     
+    Erro.LogaErro Err, "clsNavegador.BuscaTela"
 End Function
 Public Function LocalizaTela(ByRef Tela As clsTela)
 'Procura na tabela de telas pelos códigos e titulo se encontrar
 '   preenche a tela passada no parâmetro.
     Dim Linha As Range
     Dim i As Long
+    
+    On Error GoTo LogaErro
+    
     i = 1
     
     For Each Linha In rngArvoreMenus.Rows
@@ -149,9 +170,18 @@ Public Function LocalizaTela(ByRef Tela As clsTela)
     
     gsspSisap.JanelaAlerta "Não foi possível localizar a Tela solicitada!" _
     & vbNewLine & "Por favor insira o caminho até essa tela no sistema!"
-    gsspSisap.EncerraSisap
+    gsspSisap.TelaInicial
+    'gsspSisap.EncerraSisap
     
 EncontrouTela:
+
+Exit Function
+LogaErro:
+
+    Dim Erro As IErro
+    Set Erro = New clsErro
+    
+    Erro.LogaErro Err, "clsNavegador.BuscaTela"
 
 End Function
 Public Function VoltaTela(ByRef Tela As clsTela, _
@@ -175,48 +205,53 @@ Public Function VoltaTela(ByRef Tela As clsTela, _
     
 End Function
 
-Public Function VoltaAncestralEmComum(ByRef Tela_Destino As clsTela) _
+Public Function VoltaAncestralEmComum(ByRef TelaDestino As clsTela) _
     As Integer
     
     Dim Nav As New clsNavegador
-    Dim tel1 As clsTela
-    Dim telAux  As clsTela
+    Dim TelaOrigem As clsTela
+    Dim TelaAuxiliar  As clsTela
     Dim voltarContador  As Integer
     
-    Set tel1 = gsspSisap.Tela
+    Set TelaOrigem = gsspSisap.Tela
     
-    Nav.LocalizaTela tel1
+    Nav.LocalizaTela TelaOrigem
     voltarContador = 0
   
     Dim achou As Boolean
   
-    Do While tel1.AnteriorTela <> 0 And _
+    Do While TelaOrigem.AnteriorTela <> 0 And _
         achou = False
         
-        Set telAux = Tela_Destino
+        Set TelaAuxiliar = TelaDestino
         
-        Do While telAux.AnteriorTela <> 0
-         
-            If tel1.AnteriorTela = telAux.AnteriorTela Or _
-            tel1.Indice = telAux.Indice Then
+        Do While TelaAuxiliar.AnteriorTela <> 0
+            
+            If IsTelaDeIdentificacaoDoServidor(TelaOrigem) And _
+                TelaOrigem.Indice = TelaAuxiliar.Indice Then
+                achou = True
+                VoltaAncestralEmComum = TelaAuxiliar.Indice
+                GoTo AchouAncestralEmComum
+                
+            ElseIf TelaOrigem.AnteriorTela = TelaAuxiliar.AnteriorTela Then
                 achou = True
                 voltarContador = voltarContador + 1
-                VoltaAncestralEmComum = telAux.AnteriorTela
+                VoltaAncestralEmComum = TelaAuxiliar.AnteriorTela
                 GoTo AchouAncestralEmComum
                 
             End If
-            Set telAux = Nav.BuscaTela(telAux.AnteriorTela)
+            Set TelaAuxiliar = Nav.BuscaTela(TelaAuxiliar.AnteriorTela)
         Loop
         
       voltarContador = voltarContador + 1
-      Set tel1 = Nav.BuscaTela(tel1.AnteriorTela)
+      Set TelaOrigem = Nav.BuscaTela(TelaOrigem.AnteriorTela)
     Loop
     
 AchouAncestralEmComum:
     
-    If (tel1.Indice = 1) Or _
+    If (TelaOrigem.Indice = 1) Or _
         (voltarContador > 4) Or _
-        (tel1.AnteriorTela = 1) Then
+        (TelaOrigem.AnteriorTela = 1) Then
         Debug.Print "Voltando Tela Inicial."
         gsspSisap.TelaInicial
     Else
@@ -228,18 +263,18 @@ End Function
 
 Public Function CaminhoParaTela(ByRef Tela As clsTela) As clstelsTela
 
-    Dim telAux As clsTela
+    Dim TelaAuxiliar As clsTela
     Dim auxColletion As clstelsTela
     Dim indiceAux As Integer
     Dim Obj As Object
     Dim str As String
     Set CaminhoParaTela = New clstelsTela
     
-    Set telAux = Tela
+    Set TelaAuxiliar = Tela
     
-    Do While Not telAux.Indice = 0
-        CaminhoParaTela.Add telAux
-        Set telAux = BuscaTela(telAux.AnteriorTela)
+    Do While Not TelaAuxiliar.Indice = 0
+        CaminhoParaTela.Add TelaAuxiliar
+        Set TelaAuxiliar = BuscaTela(TelaAuxiliar.AnteriorTela)
 
     Loop
     
@@ -254,11 +289,53 @@ Public Function CaminhoParaTela(ByRef Tela As clsTela) As clstelsTela
     
     CaminhoParaTela.Collection = MyNewCol
     
-    For Each telAux In CaminhoParaTela.Collection
-        str = str & telAux.Indice & ","
+    For Each TelaAuxiliar In CaminhoParaTela.Collection
+        str = str & TelaAuxiliar.Indice & ","
     Next
     
     Debug.Print "Ordem Descendente até a tela : " & vbNewLine _
     & str
+    
+End Function
+
+Public Function IsTelaDeIdentificacaoDoServidor(ByRef Tela As clsTela) _
+        As Boolean
+    
+    Const QUANTIDADE_DE_TELAS = 6
+    Dim CodigosTelasIdentificacaoDoServidor(1 To QUANTIDADE_DE_TELAS, _
+        1 To 2) As String
+    Dim i As Long
+
+    
+    
+    CodigosTelasIdentificacaoDoServidor(1, 1) = "VISHCINC"
+    CodigosTelasIdentificacaoDoServidor(1, 2) = "NISHC001"
+    
+    CodigosTelasIdentificacaoDoServidor(2, 1) = "VISHC001"
+    CodigosTelasIdentificacaoDoServidor(2, 2) = "NISHC172"
+    
+    CodigosTelasIdentificacaoDoServidor(3, 1) = "VISHC001"
+    CodigosTelasIdentificacaoDoServidor(3, 2) = "NISHC151"
+    
+    CodigosTelasIdentificacaoDoServidor(4, 1) = "VISHC001"
+    CodigosTelasIdentificacaoDoServidor(4, 2) = "NISHC001"
+    
+    CodigosTelasIdentificacaoDoServidor(5, 1) = "VFFAK881"
+    CodigosTelasIdentificacaoDoServidor(5, 2) = "NFFAKZZD"
+    
+    CodigosTelasIdentificacaoDoServidor(6, 1) = "VISHC146"
+    CodigosTelasIdentificacaoDoServidor(6, 2) = "NISHC145"
+    
+    For i = 1 To QUANTIDADE_DE_TELAS
+
+        If Tela.CodPrograma = CodigosTelasIdentificacaoDoServidor(i, 1) And _
+            Tela.CodTela = CodigosTelasIdentificacaoDoServidor(i, 2) Then
+            IsTelaDeIdentificacaoDoServidor = True
+            Exit Function
+        End If
+
+    Next i
+
+    IsTelaDeIdentificacaoDoServidor = False
     
 End Function

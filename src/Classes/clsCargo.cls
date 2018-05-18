@@ -46,9 +46,9 @@ Public Function CriaObjeto(ByVal Cargo As String)
 
 End Function
 
-Public Function ParaRomano(ByVal Num As Integer) As String
+Public Function ParaRomano(ByVal num As Integer) As String
 
-    Select Case Num
+    Select Case num
         Case 1
             ParaRomano = "I"
         Case 2

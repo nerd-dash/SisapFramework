@@ -35,8 +35,15 @@ End Property
 
 ''Procedure para Testes rápido
 Sub A_TableTest()
-
-    PegaVerbasCargoRecebimento
+    EventosHabilitados False
+    
+    Dim FaltasConsolidadas As IRelatorio
+    
+    Set FaltasConsolidadas = New clswsFaltasConsHistorico
+    
+    FaltasConsolidadas.AtualizaFormulario
+    
+    EventosHabilitados True
 
 End Sub
 

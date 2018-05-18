@@ -228,10 +228,10 @@ On Error GoTo ValorInvalido
     NavIncluirDesligamentoDesignado
 
 ValorInvalido:
-    resposta = InputBox("Código da Natureza do Desligamento", _
+    Resposta = InputBox("Código da Natureza do Desligamento", _
         "Desligamento", "10")
         
-    CodNatureza = CInt(resposta)
+    CodNatureza = CInt(Resposta)
     
     strDate = InputBox("Por favor entre com a data do Desligamento:", _
                         "Desligamento", Format(Now(), "dd/mm/yyyy"))
@@ -260,11 +260,11 @@ Public Function EnviaVerbasDeAcerto()
 
     NavLancamentoCargoCodigoRecebimento
     
-    EnviaVerba gdsgDesigncao.VerbaRB, gdsgDesigncao.VerbaRBValor
-    EnviaVerba gdsgDesigncao.VerbaEC, gdsgDesigncao.VerbaECValor
-    EnviaVerba gdsgDesigncao.VerbaAbonoRB, gdsgDesigncao.VerbaAbonoRBValor
-    EnviaVerba gdsgDesigncao.VerbaAbonoEC, gdsgDesigncao.VerbaAbonoECValor
-    EnviaVerba gdsgDesigncao.VerbaValeTransporte, gdsgDesigncao.VerbaValeTransporteValor
+    IncluiVerba gdsgDesigncao.VerbaRB, gdsgDesigncao.VerbaRBValor
+    IncluiVerba gdsgDesigncao.VerbaEC, gdsgDesigncao.VerbaECValor
+    IncluiVerba gdsgDesigncao.VerbaAbonoRB, gdsgDesigncao.VerbaAbonoRBValor
+    IncluiVerba gdsgDesigncao.VerbaAbonoEC, gdsgDesigncao.VerbaAbonoECValor
+    IncluiVerba gdsgDesigncao.VerbaValeTransporte, gdsgDesigncao.VerbaValeTransporteValor
     gsspSisap.Enter 1, 8
     gsspSisap.F5
     
@@ -274,11 +274,11 @@ Public Function EnviaVerbasDeAcerto()
     
     If answer = vbYes Then
         
-        EnviaVerba 7630, CalculaVerbaIPSEMG( _
+        IncluiVerba 7630, CalculaVerbaIPSEMG( _
             gdsgDesigncao.VerbaRBValor + gdsgDesigncao.VerbaECValor)
     End If
     
-    EnviaVerba gdsgDesigncao.DespesaValeTransporte, gdsgDesigncao.DespesaValeTransporteValor, 1
+    IncluiVerba gdsgDesigncao.DespesaValeTransporte, gdsgDesigncao.DespesaValeTransporteValor, 1
 
     
     gsspSisap.Enter 1, 8
@@ -289,7 +289,7 @@ Public Function EnviaVerbasDeAcerto()
     
 End Function
 
-Private Function EnviaVerba(ByVal Verba As Long, ByVal Valor As Double, _
+Private Function IncluiVerba(ByVal Verba As Long, ByVal Valor As Double, _
     Optional ByVal Quant As Long = 0)
     If Not Verba = 0 _
         And Not Valor = 0 Then
@@ -330,21 +330,7 @@ Private Function EncontraProximaVerba()
         End If
     Loop While Not Verba = 0
 End Function
-Private Function CalculaVerbaIPSEMG(ByVal Valor As Double) As Double
-    
-    Dim dbl As Double
-    
-    dbl = (Valor * 3.2) / 100
-    
-    If dbl <= 30 Then
-        dbl = 30
-    ElseIf dbl >= 250 Then
-        dbl = 250
-    End If
-    
-    CalculaVerbaIPSEMG = dbl
-    
-End Function
+
 
 Private Function Corrige5647()
 

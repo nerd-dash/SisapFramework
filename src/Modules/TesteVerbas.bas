@@ -9,7 +9,7 @@ Sub TestaBuscarVerbas()
     
     Dim acerto As IVerbas
     
-    Set acerto = New clsAcertoVantagem
+    Set acerto = New clswsAcertoVantagem
     
     acerto.AtualizaFormulario
     
@@ -19,7 +19,7 @@ Sub TestaBuscarVerbas()
    
     Set acerto = Nothing
     
-    Set acerto = New clsAcertoDesconto
+    Set acerto = New clswsAcertoDesconto
     
     
     Debug.Assert acerto.Verbas.Item(1).Verba = 5502
@@ -34,11 +34,11 @@ End Sub
 Public Sub TestaLimpezaDasTabelas()
     Dim acerto As IVerbas
     
-    Set acerto = New clsAcertoVantagem
+    Set acerto = New clswsAcertoVantagem
     acerto.Limpa
 
     Set acerto = Nothing
-    Set acerto = New clsAcertoDesconto
+    Set acerto = New clswsAcertoDesconto
     acerto.Limpa
     
 End Sub

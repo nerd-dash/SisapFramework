@@ -50,4 +50,9 @@
 	- Criação de Planilha de inclusão de Faltas
 	- Limpeza da Planilha de inclusão de faltas.
 	- Geração de Relatório de Inclusão de Faltas
+-0.2.4.7a
+	- Interface para manipulação de erros.
+	- Implementação de classe que loga erros.
+	- Inclui Faltas de Histórico
+	- Inclui reposições de Faltas greve na planilha de faltas histórico.
 	

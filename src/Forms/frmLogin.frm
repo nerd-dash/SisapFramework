@@ -109,7 +109,7 @@ End Sub
 
 Private Sub UserForm_Activate()
     
-    Set Planilha = wsGeral
+    Set Planilha = wsDadosFormularios
     
     chkLembraSenha.value = Planilha.[frmLogin.LembrarSenha]
     txtLoginMasp.Text = Planilha.[frmLogin.Masp]
@@ -131,7 +131,7 @@ Private Sub UserForm_Activate()
 
 End Sub
 
-Private Sub UserForm_BeforeDragOver(ByVal Cancel As MSForms.ReturnBoolean, ByVal Control As MSForms.Control, ByVal Data As MSForms.DataObject, ByVal X As Single, ByVal Y As Single, ByVal State As MSForms.fmDragState, ByVal Effect As MSForms.ReturnEffect, ByVal Shift As Integer)
+Private Sub UserForm_BeforeDragOver(ByVal Cancel As MSForms.ReturnBoolean, ByVal Control As MSForms.Control, ByVal Data As MSForms.DataObject, ByVal x As Single, ByVal Y As Single, ByVal State As MSForms.fmDragState, ByVal Effect As MSForms.ReturnEffect, ByVal Shift As Integer)
     
  
 
@@ -147,7 +147,7 @@ Private Sub UserForm_Deactivate()
     
 End Sub
 
-Private Sub UserForm_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Private Sub UserForm_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal Y As Single)
 
 End Sub
 
